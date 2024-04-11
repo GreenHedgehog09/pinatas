@@ -5,7 +5,7 @@ def partition(numbers: list, begin: int, end: int):
 
     for j in range(begin, end):
         if numbers[j] >= pivot:
-            i = i + 1
+            i += 1
             (numbers[i], numbers[j]) = (numbers[j], numbers[i])
     (numbers[i + 1], numbers[end]) = (numbers[end], numbers[i + 1])
 
@@ -28,7 +28,6 @@ def max_amount_candies(pinatas: list) -> int:
     max_candies = 0
     # Sort descending
     quick_sort(pinatas, 0, len(pinatas) - 1)
-    # print(pinatas)
 
     # Calculation candies
     length = len(pinatas)
@@ -47,8 +46,13 @@ def max_amount_candies(pinatas: list) -> int:
 def main():
     while True:
         pinatas = []
+        size = 2
         while True:
-            size = int(input('Enter amount pinatas: '))
+            try:
+                size = int(input('Enter amount pinatas: '))
+            except ValueError:
+                print('Must be an integer!')
+                continue
             if size > 1:
                 break
             else:
@@ -56,10 +60,19 @@ def main():
 
         print('Enter candies:')
         for i in range(size):
-            item = int(input())
-            pinatas.append(item)
-        print(f'Input pinatas: {pinatas}')
+            while True:
+                try:
+                    item = int(input())
+                except ValueError:
+                    print('Must be an integer!')
+                    continue
+                if item >= 1:
+                    pinatas.append(item)
+                    break
+                else:
+                    print('At least 1 candy!')
 
+        print(f'Input pinatas: {pinatas}')
         result = max_amount_candies(pinatas)
         print(f'Max amount of candies: {result}')
 
